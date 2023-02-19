@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using UnityEngine;
 
+
 public class PlayerBulletsPooling : MonoBehaviour
 {
     [Header("PREFAB")]
@@ -39,6 +40,7 @@ public class PlayerBulletsPooling : MonoBehaviour
         {
             GameObject obj = Instantiate(bulletPrefab, frontalPosition.position, Quaternion.identity);
             obj.GetComponent<BulletBehavior>().explosion = Instantiate(explosion, obj.transform.position, Quaternion.identity);
+            obj.GetComponent<BulletBehavior>().SetTargetEnemys(Target.Enemy); 
             EnqueueFrontalAmmoObj(obj);
         }
 
@@ -46,6 +48,7 @@ public class PlayerBulletsPooling : MonoBehaviour
         {
             GameObject obj = Instantiate(bulletPrefab, sidePosition.position, Quaternion.identity);
             obj.GetComponent<BulletBehavior>().explosion = Instantiate(explosion, obj.transform.position, Quaternion.identity);
+            obj.GetComponent<BulletBehavior>().SetTargetEnemys(Target.Enemy);
             EnqueueSideAmmoObj(obj);
         }
     }
@@ -82,7 +85,7 @@ public class PlayerBulletsPooling : MonoBehaviour
     public void EnqueueFrontalAmmoObj(GameObject obj)
     {
         obj.SetActive(false);
-        obj.GetComponent<BulletBehavior>().Frontal = true;
+        obj.GetComponent<BulletPlayerPool>().Frontal = true;
         pooledFrontalAmmo.Enqueue(obj);
     }
 
@@ -91,7 +94,7 @@ public class PlayerBulletsPooling : MonoBehaviour
         GameObject obj = pooledFrontalAmmo.Dequeue();
         obj.SetActive(true);
         obj.GetComponent<BulletBehavior>().MoveDirection = transform.rotation * Vector3.up;
-        obj.GetComponent<BulletBehavior>().SetDisableBullet();
+        obj.GetComponent<BulletPlayerPool>().SetDisableBullet();
         obj.transform.position = frontalPosition.position;
         return obj;
     }
@@ -127,8 +130,7 @@ public class PlayerBulletsPooling : MonoBehaviour
 
             obj.SetActive(true);
             obj.GetComponent<BulletBehavior>().MoveDirection = sidePosition.transform.right;
-            obj.GetComponent<BulletBehavior>().SetDisableBullet();
-
+            obj.GetComponent<BulletPlayerPool>().SetDisableBullet();
             obj.transform.position = sidePosition.position;
         }
     }

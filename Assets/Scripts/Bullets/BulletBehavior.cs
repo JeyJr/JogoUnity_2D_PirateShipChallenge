@@ -1,26 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.Events;
 
+public enum Target { Enemy, Player}
 public class BulletBehavior : MonoBehaviour
 {
     [SerializeField] private float moveSpeed;
-    public Vector3 MoveDirection { get; set; }
-    private PlayerBulletsPooling playerBulletsPooling;
-    public bool Frontal { get; set; }
-
-    [Space(10)]
     private readonly float damage = 1;
     public UnityEvent onHit;
-
-    [Space(10)]
+    public Vector3 MoveDirection { get; set; }
     public GameObject explosion;
+    private string target;
 
-    private void Start()
-    {
-        playerBulletsPooling =GameObject.FindWithTag("Player").GetComponent<PlayerBulletsPooling>();
+    public void SetTargetEnemys(Target target) {
+        this.target = target.ToString();
     }
 
     void Update()
@@ -31,46 +24,50 @@ public class BulletBehavior : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        var enemy = collision.GetComponent<EnemyStats>();
-        if(enemy != null)
-        {
-            enemy.TakeDamage(damage);
-            onHit.Invoke();
-        }
-    }
-
-    #region Bullet in Pool
     public void SetDisableBullet()
     {
         StartCoroutine(DisableBullet());
     }
     IEnumerator DisableBullet()
     {
-        yield return new WaitForSeconds(.3f);
-        Enqueue();
+        yield return new WaitForSeconds(.5f);
+        Destroy(gameObject);
     }
-    public void Enqueue()
-    {
-        if (Frontal)
-        {
-            playerBulletsPooling.EnqueueFrontalAmmoObj(gameObject);
-        }
-        else
-        {
-            playerBulletsPooling.EnqueueSideAmmoObj(gameObject);
-        }
-    }
-    #endregion
 
-    public void BulletHitSFX()
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag(target.ToString()))
+        {
+            collision.GetComponent<BoatStats>().TakeDamage(damage);
+            onHit.Invoke();
+        }
+    }
+
+    public void OnHitSFX()
     {
         //Play SoundEffect
     }
-    public void BulletExplosion()
+    public void OnHitExplosion()
     {
-        explosion.transform.position = transform.position;
-        explosion.GetComponent<VFXBehavior>().SetEnabledAndPlayAnimation(AnimName.explosion);
+        if (explosion != null)
+        {
+            explosion.transform.position = transform.position;
+            explosion.GetComponent<VFXBehavior>().SetEnabledAndPlayAnimation(AnimName.explosion);
+        }
+    }
+
+    public void OnHitInstantiateExplosion()
+    {
+        if (explosion != null)
+        {
+            var obj = Instantiate(explosion, transform.position, Quaternion.identity);
+            obj.GetComponent<VFXBehavior>().SetDestroyObj(.3f);
+        }
+    }
+
+    public void OnHitDestroy()
+    {
+        StopCoroutine(DisableBullet());
+        Destroy(gameObject);
     }
 }

@@ -6,6 +6,7 @@ public enum AnimName { explosion }
 public class VFXBehavior : MonoBehaviour
 {
     Animator anim;
+
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -19,5 +20,10 @@ public class VFXBehavior : MonoBehaviour
     public void SetDisableAtTheEndOfAnimation()
     {
         gameObject.SetActive(false);
+    }
+
+    public void SetDestroyObj(float time)
+    {
+        Destroy(gameObject, time);
     }
 }

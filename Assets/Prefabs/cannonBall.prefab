@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3331943786426538842}
   - component: {fileID: 4101540895129248938}
-  - component: {fileID: 5772404840892087820}
   - component: {fileID: -131903741319532671}
   - component: {fileID: -2112244223202778628}
+  - component: {fileID: 5772404840892087820}
+  - component: {fileID: -702476988358072901}
   m_Layer: 0
   m_Name: cannonBall
   m_TagString: Bullet
@@ -87,59 +88,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5772404840892087820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8027608540239113879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9d5f1035e26b544c95007b7730e0abd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
-  onHit:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5772404840892087820}
-        m_TargetAssemblyTypeName: BulletBehavior, Assembly-CSharp
-        m_MethodName: Enqueue
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 5772404840892087820}
-        m_TargetAssemblyTypeName: BulletBehavior, Assembly-CSharp
-        m_MethodName: BulletHitSFX
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 5772404840892087820}
-        m_TargetAssemblyTypeName: BulletBehavior, Assembly-CSharp
-        m_MethodName: BulletExplosion
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  explosion: {fileID: 0}
 --- !u!61 &-131903741319532671
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -187,3 +135,68 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &5772404840892087820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8027608540239113879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9d5f1035e26b544c95007b7730e0abd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  onHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5772404840892087820}
+        m_TargetAssemblyTypeName: BulletBehavior, Assembly-CSharp
+        m_MethodName: OnHitSFX
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5772404840892087820}
+        m_TargetAssemblyTypeName: BulletBehavior, Assembly-CSharp
+        m_MethodName: OnHitExplosion
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: -702476988358072901}
+        m_TargetAssemblyTypeName: BulletPlayerPool, Assembly-CSharp
+        m_MethodName: Enqueue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  explosion: {fileID: 8130418857826253456, guid: 9393c69c50cf0f24fb7fba915701d89f, type: 3}
+--- !u!114 &-702476988358072901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8027608540239113879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5964dcd421917464c913b48a18ac91af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

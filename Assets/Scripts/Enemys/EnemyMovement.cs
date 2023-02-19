@@ -5,42 +5,37 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = .3f;
+    private float moveSpeed = .3f;
     [SerializeField] private float rotationSpeed = 80;
-    public Transform target;
+    public Transform Target { get; set; }
+    public LayerMask barrier;
     private float rayDistance = .5f;
-    public LayerMask layerMask;
 
-    bool interruptedMovement, isChasing;
-    float distance = 0;
-    [SerializeField] private float maxDistance;
-
-
-    private void Start()
-    {
-        target = GameObject.FindWithTag("Player").GetComponent<Transform>();
-    }
+    public bool InterruptedMovement { get; set; }
+    public bool IsDead { get; set; }
+    public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
 
     private void Update()
     {
-        if (!interruptedMovement)
+        if (!IsDead)
         {
-            Movement();
+            if (!InterruptedMovement)
+            {
+                Movement();
+                LimitMovementArea();
+            }
+            LookingAtTheTarget();
         }
-
-        LooingAtTheTarget();
-        CheckDistanceToTarget();
-        LimitMovementArea();
     }
 
     void Movement()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, Target.position, MoveSpeed * Time.deltaTime);
     }
 
-    void LooingAtTheTarget()
+    void LookingAtTheTarget()
     {
-        Vector3 dir = target.position - transform.position;
+        Vector3 dir = Target.position - transform.position;
         dir.z = 0f;
 
         if(dir != Vector3.zero)
@@ -52,30 +47,16 @@ public class EnemyMovement : MonoBehaviour
 
     public void LimitMovementArea()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, rayDistance, layerMask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, rayDistance, barrier);
 
         if (hit.collider != null)
         {
-            moveSpeed = 0;
-            interruptedMovement = true;
+            MoveSpeed = 0;
+            InterruptedMovement = true;
         }
         else
         {
-            moveSpeed = .2f;
-        }
-    }
-
-
-    private void CheckDistanceToTarget()
-    {
-        distance = Vector2.Distance(transform.position, target.position);
-        if (distance < maxDistance)
-        {
-            interruptedMovement = false;
-        }
-        else
-        {
-            interruptedMovement = true;
+            MoveSpeed = .2f;
         }
     }
 
