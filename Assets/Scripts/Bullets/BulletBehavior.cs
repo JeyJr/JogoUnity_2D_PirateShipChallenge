@@ -31,7 +31,7 @@ public class BulletBehavior : MonoBehaviour
     }
     IEnumerator DisableBullet()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.8f);
         Destroy(gameObject);
     }
 
@@ -67,7 +67,7 @@ public class BulletBehavior : MonoBehaviour
         if (explosion != null)
         {
             var obj = Instantiate(explosion, transform.position, Quaternion.identity);
-            obj.GetComponent<VFXBehavior>().SetDestroyObj(.5f);
+            obj.GetComponent<VFXBehavior>().SetDestroyObj(.8f);
         }
     }
 

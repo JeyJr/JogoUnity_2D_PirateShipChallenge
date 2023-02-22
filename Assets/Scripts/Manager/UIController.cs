@@ -15,7 +15,7 @@ public class UIController : MonoBehaviour
     public List<GameObject> panelsGameObject;
 
     public GameManager gameManager;
-
+    public PlayerBulletsPooling playerBullet;
 
     [Header("Panel Config")]
     public TextMeshProUGUI txtDuration;
@@ -24,6 +24,8 @@ public class UIController : MonoBehaviour
 
     [Header("Panel HUD")]
     public TextMeshProUGUI txtGameTime;
+    public Slider sliderSShoot, sliderFShoot;
+
 
     [Header("Panel EndGame")]
     public TextMeshProUGUI txtPoints;
@@ -67,6 +69,40 @@ public class UIController : MonoBehaviour
         int seconds = Mathf.FloorToInt(value % 60);
         string timeString = string.Format("{0:00}:{1:00}", minutes, seconds);
         txtGameTime.text = timeString;
+    }
+
+
+    public void StartCountdownToSideShot(float delayTime) => StartCoroutine(SideShot(delayTime));
+    IEnumerator SideShot(float delayTime)
+    {
+        sliderSShoot.maxValue = delayTime;
+        sliderSShoot.minValue = 0;
+        sliderSShoot.value = delayTime;
+
+        while(delayTime > 0)
+        {
+            yield return new WaitForSeconds(.1f);
+            delayTime-= .1f;
+            sliderSShoot.value = delayTime;
+        }
+
+        yield return new WaitForEndOfFrame();
+        playerBullet.IsShootingS = false;
+    }
+    public void StartCountdownToFrontaleShot(float delayTime) => StartCoroutine(FrontalShot(delayTime));
+    IEnumerator FrontalShot(float delayTime)
+    {
+        sliderFShoot.maxValue = delayTime;
+        sliderFShoot.minValue = 0;
+        sliderFShoot.value = delayTime;
+
+        while (delayTime > 0)
+        {
+            yield return new WaitForSeconds(.1f);
+            delayTime -= .1f;
+            sliderFShoot.value = delayTime;
+        }
+        playerBullet.IsShootingF = false;
     }
 
 
