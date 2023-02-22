@@ -9,8 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private float rotationSpeed;
 
-    public LayerMask layerMask;
-    public float distance;
+    public bool IsDead { get; set; }
 
     private void Start()
     {
@@ -20,8 +19,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        Movement();
-        LimitMovementArea();
+        if (!IsDead)
+        {
+            Movement();
+        }
     }
 
     private void Movement()
@@ -38,23 +39,5 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.Rotate(Vector3.back, rotationSpeed * Time.deltaTime);
         }
-    }
-    public void LimitMovementArea()
-    {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, distance, layerMask);
-
-        if(hit.collider != null)
-        {
-            moveSpeed = 0;
-        }
-        else
-        {
-            moveSpeed = 1;
-        }
-    }
-
-    private void OnDrawGizmos()
-    {
-        Debug.DrawRay(transform.position, transform.up * distance, Color.red);
     }
 }

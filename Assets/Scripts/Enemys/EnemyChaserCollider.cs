@@ -1,17 +1,25 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyChaserCollider : MonoBehaviour
 {
     private BoatStats playerStats;
     [SerializeField] private float damage;
 
-    private void Start()
+    public UnityEvent hitPlayer;
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        playerStats = GameObject.FindWithTag("Player").GetComponent<BoatStats>();
+        if (collision.gameObject.CompareTag(Target.Player.ToString()))
+        {
+            playerStats = collision.gameObject.GetComponent<BoatStats>();
+            hitPlayer.Invoke();
+        }
     }
 
-    public void WhenCollidingDamageTheTarget()
+    public void HitTheTarget()
     {
         playerStats.TakeDamage(damage);
     }
+
 }

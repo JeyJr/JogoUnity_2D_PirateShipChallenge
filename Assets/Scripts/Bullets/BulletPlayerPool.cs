@@ -19,7 +19,7 @@ public class BulletPlayerPool : MonoBehaviour
     }
     IEnumerator DisableBullet()
     {
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(.5f);
         Enqueue();
     }
     public void Enqueue()

@@ -8,7 +8,8 @@ using UnityEngine;
 public class PlayerBulletsPooling : MonoBehaviour
 {
     [Header("PREFAB")]
-    public GameObject bulletPrefab;
+    public GameObject frontalCannonBall;
+    public GameObject sideCannonBall;
 
     [Space(5)]
     [Header("FRONT")]
@@ -28,6 +29,7 @@ public class PlayerBulletsPooling : MonoBehaviour
 
     [Space(10)]
     public GameObject explosion;
+    public bool IsDead { get; set; }
 
     private void Start()
     {
@@ -36,9 +38,10 @@ public class PlayerBulletsPooling : MonoBehaviour
 
     void InitializePool()
     {
+        
         for (int i = 0; i < maxFrontalPoolSize; i++)
         {
-            GameObject obj = Instantiate(bulletPrefab, frontalPosition.position, Quaternion.identity);
+            GameObject obj = Instantiate(frontalCannonBall, frontalPosition.position, Quaternion.identity);
             obj.GetComponent<BulletBehavior>().explosion = Instantiate(explosion, obj.transform.position, Quaternion.identity);
             obj.GetComponent<BulletBehavior>().SetTargetEnemys(Target.Enemy); 
             EnqueueFrontalAmmoObj(obj);
@@ -46,7 +49,7 @@ public class PlayerBulletsPooling : MonoBehaviour
 
         for (int i = 0; i < maxSidePoolSize; i++)
         {
-            GameObject obj = Instantiate(bulletPrefab, sidePosition.position, Quaternion.identity);
+            GameObject obj = Instantiate(sideCannonBall, sidePosition.position, Quaternion.identity);
             obj.GetComponent<BulletBehavior>().explosion = Instantiate(explosion, obj.transform.position, Quaternion.identity);
             obj.GetComponent<BulletBehavior>().SetTargetEnemys(Target.Enemy);
             EnqueueSideAmmoObj(obj);
@@ -56,16 +59,19 @@ public class PlayerBulletsPooling : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !isShootingF)
+        if (!IsDead)
         {
-            isShootingF = true;
-            FrontalSpawnBullet();
-        }
+            if (Input.GetMouseButtonDown(0) && !isShootingF)
+            {
+                isShootingF = true;
+                FrontalSpawnBullet();
+            }
 
-        if (Input.GetKey(KeyCode.Space) && !isShootingS)
-        {
-            isShootingS = true;
-            SideSpawnBullet();
+            if (Input.GetKey(KeyCode.Space) && !isShootingS)
+            {
+                isShootingS = true;
+                StartCoroutine(SideSpawnBullet());
+            }
         }
     }
 
@@ -101,15 +107,15 @@ public class PlayerBulletsPooling : MonoBehaviour
     #endregion
 
     #region Side
-    private async void SideSpawnBullet()
+    private IEnumerator SideSpawnBullet()
     {
-        await Task.Delay(500);
-
         if (pooledSideAmmo.Count > 0)
         {
             DequeueSideAmmoObj();
         }
 
+        float waitTime = 5f;
+        yield return new WaitForSeconds(waitTime);
         isShootingS = false;
     }
 

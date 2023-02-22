@@ -6,20 +6,25 @@ using UnityEngine.UI;
 
 public class BoatStats : MonoBehaviour
 {
+    public SpawnEnemies SpawnEnemies { get; set; }
+    public GameManager GameManager { get; set; }
+
     [Header("BOAT OBJ")]
     [SerializeField] private bool player;
-    public SpawnEnemies SpawnEnemies { get; set; }
 
     [Header("LIFE")]
-    [SerializeField] private float maxLife = 10f;
+    [SerializeField] private float maxLife;
     [SerializeField] private float currentLife;
     [SerializeField] private Slider lifeBar;
+    [SerializeField] private float lifeComparisonValue;
     public float CurrentLife { get => currentLife;}
 
     [Space(5)]
     [Header("SPRITES")]
     [SerializeField] private SpriteRenderer spriteRenderer;
-    public Sprite initialSprite, midSprite, deadSprite;
+    public Sprite spriteNoDamage, spriteLightDamage, spriteHeavyDamage, spriteDead;
+
+    [SerializeField] private int points = 1;
 
     [Header("HIT and DEATH")]
     public GameObject explosion;
@@ -36,7 +41,8 @@ public class BoatStats : MonoBehaviour
 
             if (player)
             {
-                return;
+                GetComponent<PlayerMovement>().IsDead = value;
+                GetComponent<PlayerBulletsPooling>().IsDead = value;
             }
             else
             {
@@ -45,13 +51,12 @@ public class BoatStats : MonoBehaviour
             }
         }
     }
-    private void Start()
-    {
-        SetInitialValues();
-    }
 
-    public void SetInitialValues()
+    public void SetInitialValues(float maxLife)
     {
+        lifeComparisonValue = maxLife / 3f;
+
+        this.maxLife = maxLife;
         currentLife = maxLife;
         lifeBar.maxValue = maxLife;
         lifeBar.value = maxLife;
@@ -62,7 +67,7 @@ public class BoatStats : MonoBehaviour
         }
 
         IsDead = false;
-        UpdateSprite(initialSprite);
+        UpdateSprite(spriteNoDamage);
     }
 
     public void TakeDamage(float damage)
@@ -80,47 +85,53 @@ public class BoatStats : MonoBehaviour
 
     public void OnHit()
     {
-        if (currentLife <= maxLife / 2)
+        if(currentLife <= maxLife - (lifeComparisonValue * 2))
         {
-            UpdateSprite(midSprite);
+            UpdateSprite(spriteHeavyDamage);
+        }
+        else if (currentLife <= maxLife - lifeComparisonValue)
+        {
+            UpdateSprite(spriteLightDamage);
         }
 
         if (!player)
         {
             lifeBar.gameObject.SetActive(true);
-            StartCoroutine(OnHitHideLifeBar(2f));
         }
 
         lifeBar.value = currentLife;
     }
-
-    private IEnumerator OnHitHideLifeBar(float time)
-    {
-        yield return new WaitForSeconds(time);
-        lifeBar.gameObject.SetActive(false);
-    }
+    
     public void OnDeath()
     {
         Instantiate(explosion, transform.position, Quaternion.identity);
-        UpdateSprite(deadSprite);
+        UpdateSprite(spriteDead);
         IsDead = true;
 
         if (player)
         {
-            return;
+            StartCoroutine(EndGamePlayer());
         }
-        else
-        {
-            StartCoroutine(OnDeathHideBoat());
+        else{
+            StartCoroutine(DisableBoat());
         }
 
         //SFX?
     }
-    private IEnumerator OnDeathHideBoat()
+
+    IEnumerator EndGamePlayer()
     {
-        float waitTime = 1.5f;
-        yield return new WaitForSeconds(waitTime);
-        gameObject.SetActive(false);
+        yield return new WaitForSeconds(2);
+
+        if(GameManager.GameState != GameState.EndGame)
+            GameManager.SetGameState(GameState.EndGame);
+    }
+
+    IEnumerator DisableBoat()
+    {
+        GameManager.Points += points;
+
+        yield return new WaitForSeconds(1);
         SpawnEnemies.Enqueue(gameObject);
     }
 

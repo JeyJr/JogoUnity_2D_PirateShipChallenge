@@ -275,6 +275,7 @@ GameObject:
   - component: {fileID: 718629694246673130}
   - component: {fileID: 718629694246673132}
   - component: {fileID: 718629694246673120}
+  - component: {fileID: 845026143702682396}
   m_Layer: 0
   m_Name: Chaser
   m_TagString: Enemy
@@ -342,9 +343,10 @@ MonoBehaviour:
   currentLife: 0
   lifeBar: {fileID: 718629694868474246}
   spriteRenderer: {fileID: 718629694062845607}
-  initialSprite: {fileID: 21300000, guid: 99ad38d4968c9d848bd3b2a152cc562b, type: 3}
-  midSprite: {fileID: 21300000, guid: 2bf9af7038a9bde4293ad981770d9fe3, type: 3}
-  deadSprite: {fileID: 21300000, guid: 359ce7d154ad56b4b879728425d44c96, type: 3}
+  spriteNoDamage: {fileID: 21300000, guid: 99ad38d4968c9d848bd3b2a152cc562b, type: 3}
+  spriteLightDamage: {fileID: 21300000, guid: fc6b720789351794697530211718d257, type: 3}
+  spriteHeavyDamage: {fileID: 21300000, guid: 2bf9af7038a9bde4293ad981770d9fe3, type: 3}
+  spriteDead: {fileID: 21300000, guid: 359ce7d154ad56b4b879728425d44c96, type: 3}
   explosion: {fileID: 8130418857826253456, guid: 9393c69c50cf0f24fb7fba915701d89f, type: 3}
   onDeath:
     m_PersistentCalls:
@@ -389,9 +391,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 55
-  barrier:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!114 &718629694246673132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -406,25 +405,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distance: 0
   minDistance: 0.5
-  maxDistance: 3
+  maxDistance: 6
   boatEvents:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 718629694246673121}
         m_TargetAssemblyTypeName: BoatStats, Assembly-CSharp
         m_MethodName: OnDeath
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 718629694246673120}
-        m_TargetAssemblyTypeName: EnemyChaserCollider, Assembly-CSharp
-        m_MethodName: WhenCollidingDamageTheTarget
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -447,6 +434,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 2
+  hitPlayer:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 718629694246673120}
+        m_TargetAssemblyTypeName: EnemyChaserCollider, Assembly-CSharp
+        m_MethodName: HitTheTarget
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 718629694246673121}
+        m_TargetAssemblyTypeName: BoatStats, Assembly-CSharp
+        m_MethodName: OnDeath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!50 &845026143702682396
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718629694246673131}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &718629694457494942
 GameObject:
   m_ObjectHideFlags: 0

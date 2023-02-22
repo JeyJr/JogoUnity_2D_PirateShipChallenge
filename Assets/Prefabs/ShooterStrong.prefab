@@ -175,6 +175,7 @@ GameObject:
   - component: {fileID: 8116136330553058147}
   - component: {fileID: 8116136330553058148}
   - component: {fileID: 8116136330553058159}
+  - component: {fileID: -5532693401145327606}
   m_Layer: 0
   m_Name: ShooterStrong
   m_TagString: Enemy
@@ -242,9 +243,10 @@ MonoBehaviour:
   currentLife: 0
   lifeBar: {fileID: 8116136330881243648}
   spriteRenderer: {fileID: 8116136330688118402}
-  initialSprite: {fileID: 21300000, guid: 4e739a2aad2e1a046ae169b3f1833a99, type: 3}
-  midSprite: {fileID: 21300000, guid: aa9f5888386537340b4e78bb58fc3a36, type: 3}
-  deadSprite: {fileID: 21300000, guid: 4b0a104604cdd9441ac492f1f4b4fb88, type: 3}
+  spriteNoDamage: {fileID: 21300000, guid: 4e739a2aad2e1a046ae169b3f1833a99, type: 3}
+  spriteLightDamage: {fileID: 21300000, guid: 539a4f9f2a28efc4eb14c9a1ca6d38dd, type: 3}
+  spriteHeavyDamage: {fileID: 21300000, guid: aa9f5888386537340b4e78bb58fc3a36, type: 3}
+  spriteDead: {fileID: 21300000, guid: 4b0a104604cdd9441ac492f1f4b4fb88, type: 3}
   explosion: {fileID: 8130418857826253456, guid: 9393c69c50cf0f24fb7fba915701d89f, type: 3}
   onDeath:
     m_PersistentCalls:
@@ -289,9 +291,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 60
-  barrier:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!114 &8116136330553058148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,7 +305,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distance: 0
   minDistance: 2.3
-  maxDistance: 5
+  maxDistance: 6
   boatEvents:
     m_PersistentCalls:
       m_Calls:
@@ -336,6 +335,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 3305630951215438230, guid: 01e5c2e248cf584469afddf83822dee6, type: 3}
   spawnPosition: {fileID: 8116136330562030426}
+--- !u!50 &-5532693401145327606
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8116136330553058149}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &8116136330562030427
 GameObject:
   m_ObjectHideFlags: 0

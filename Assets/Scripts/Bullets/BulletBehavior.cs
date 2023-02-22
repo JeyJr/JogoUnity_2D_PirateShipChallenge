@@ -6,7 +6,8 @@ public enum Target { Enemy, Player}
 public class BulletBehavior : MonoBehaviour
 {
     [SerializeField] private float moveSpeed;
-    private readonly float damage = 1;
+    [SerializeField] private float damage = 2;
+
     public UnityEvent onHit;
     public Vector3 MoveDirection { get; set; }
     public GameObject explosion;
@@ -41,6 +42,11 @@ public class BulletBehavior : MonoBehaviour
             collision.GetComponent<BoatStats>().TakeDamage(damage);
             onHit.Invoke();
         }
+
+        if (collision.gameObject.CompareTag("Barrier"))
+        {
+            onHit.Invoke();
+        }
     }
 
     public void OnHitSFX()
@@ -61,7 +67,7 @@ public class BulletBehavior : MonoBehaviour
         if (explosion != null)
         {
             var obj = Instantiate(explosion, transform.position, Quaternion.identity);
-            obj.GetComponent<VFXBehavior>().SetDestroyObj(.3f);
+            obj.GetComponent<VFXBehavior>().SetDestroyObj(.5f);
         }
     }
 
