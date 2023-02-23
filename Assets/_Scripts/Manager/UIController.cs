@@ -43,7 +43,6 @@ public class UIController : MonoBehaviour
 
         OnSliderDifficultyValueChange();
         OnSliderDurationValueChange();
-
     }
     
     //MainMenu

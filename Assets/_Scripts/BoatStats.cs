@@ -51,6 +51,12 @@ public class BoatStats : MonoBehaviour
             }
         }
     }
+    private BoatsSFX boatsSFX;
+
+    private void OnEnable()
+    {
+        boatsSFX = GetComponent<BoatsSFX>();
+    }
 
     public void SetInitialValues(float maxLife)
     {
@@ -72,6 +78,8 @@ public class BoatStats : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        boatsSFX.PlayClip(BoatSFXClip.takeDMG);
+
         if (damage <= 0) return;
 
         currentLife -= damage;

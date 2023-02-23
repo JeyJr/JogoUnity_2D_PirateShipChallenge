@@ -435,6 +435,8 @@ GameObject:
   - component: {fileID: 3114697330437231039}
   - component: {fileID: 3114697330437231028}
   - component: {fileID: 6593845353292143043}
+  - component: {fileID: 3465226634287079532}
+  - component: {fileID: 1994987581681943117}
   m_Layer: 0
   m_Name: Shooter
   m_TagString: Enemy
@@ -501,11 +503,13 @@ MonoBehaviour:
   maxLife: 10
   currentLife: 0
   lifeBar: {fileID: 3114697329672841435}
+  lifeComparisonValue: 0
   spriteRenderer: {fileID: 3114697330303880281}
   spriteNoDamage: {fileID: 21300000, guid: e29fc2b53bfda5341af2f17e4bba0f03, type: 3}
   spriteLightDamage: {fileID: 21300000, guid: 3847cefe1c0d25d45aedd06b71ba1661, type: 3}
   spriteHeavyDamage: {fileID: 21300000, guid: 2bcf0c858bd71d6449d629e9139bc395, type: 3}
   spriteDead: {fileID: 21300000, guid: 129cc56a4d7d4b94480d8bca4bc83a11, type: 3}
+  points: 1
   explosion: {fileID: 8130418857826253456, guid: 9393c69c50cf0f24fb7fba915701d89f, type: 3}
   onDeath:
     m_PersistentCalls:
@@ -594,6 +598,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 3305630951215438230, guid: 01e5c2e248cf584469afddf83822dee6, type: 3}
   spawnPosition: {fileID: 3114697330429442433}
+  boatSFX: {fileID: 0}
 --- !u!50 &6593845353292143043
 Rigidbody2D:
   serializedVersion: 4
@@ -615,6 +620,118 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!82 &3465226634287079532
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3114697330437231038}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1994987581681943117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3114697330437231038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d366ea99e026c2641a0a77316c12d6e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClips:
+  - {fileID: 8300000, guid: d57f70b2ce96bff439141a9fd55650f9, type: 3}
+  - {fileID: 8300000, guid: 53a4e2e83b6f78e40a066c0fde964ad1, type: 3}
+  audioSource: {fileID: 3465226634287079532}
 --- !u!1 &3114697330531374438
 GameObject:
   m_ObjectHideFlags: 0

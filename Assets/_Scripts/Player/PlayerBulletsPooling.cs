@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlayerBulletsPooling : MonoBehaviour
 {
     [SerializeField] private UIController uiController;
+    [SerializeField] private GameManager gameManager;
 
     [Header("PREFAB")]
     public GameObject frontalCannonBall;
@@ -37,11 +38,14 @@ public class PlayerBulletsPooling : MonoBehaviour
     public GameObject explosion;
     public bool IsDead { get; set; }
 
+    private BoatsSFX boatSFX;
+
     private void Start()
     {
         InitializePool();
         uiController.StartCountdownToFrontaleShot(fShotDelayTime);
         uiController.StartCountdownToSideShot(sShotDelayTime);
+        boatSFX = GetComponent<BoatsSFX>();
     }
 
     void InitializePool()
@@ -67,10 +71,12 @@ public class PlayerBulletsPooling : MonoBehaviour
 
     private void Update()
     {
-        if (!IsDead)
+        if (!IsDead && gameManager.GameState == GameState.StartMatch)
         {
             if (Input.GetMouseButtonDown(0) && !IsShootingF)
             {
+                boatSFX.PlayClip(BoatSFXClip.shoot);
+
                 IsShootingF = true; 
                 uiController.StartCountdownToFrontaleShot(fShotDelayTime);
                 FrontalSpawnBullet();
@@ -78,6 +84,8 @@ public class PlayerBulletsPooling : MonoBehaviour
 
             if (Input.GetKey(KeyCode.Space) && !IsShootingS)
             {
+                boatSFX.PlayClip(BoatSFXClip.shoot);
+
                 IsShootingS = true; 
                 uiController.StartCountdownToSideShot(sShotDelayTime);
                 SideSpawnBullet();
