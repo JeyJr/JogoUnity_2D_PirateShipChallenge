@@ -9,7 +9,7 @@ Não é necessário ter a mesma versão da Unity para abrir o projeto, mas é re
 https://jeyjr.itch.io/pirateship
 
 
-![GamePlay](https://imgs-projetos-jeyjr.netlify.app/gamesunity/pirateshipchallenge-game/GamePlay_004.png)
+![GamePlay](https://imgs-projetos-jeyjr.netlify.app/imgs/Unity_PirateShipChallenge/principal.png)
 
 
 ---
