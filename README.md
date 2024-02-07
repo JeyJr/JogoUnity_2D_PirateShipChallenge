@@ -37,9 +37,6 @@ https://github.com/JeyJr/2D_PirateShipChallenge/tree/main/Assets/Scenes
 
 Em seguida, clique duas vezes no arquivo e selecione a versão da Unity desejada para carregar o projeto. Todos os arquivos de base da Unity serão implementados automaticamente.
 
-
-![Unity](https://imgs-projetos-jeyjr.netlify.app/gamesunity/pirateshipchallenge-game/Unity_004.png)
-
 ---
 ## Uso:
 
